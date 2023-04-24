@@ -1,0 +1,69 @@
+import { ExpressApp } from '@universal-packages/express-controllers'
+import fetch from 'node-fetch'
+import { initialize } from '../../src'
+import { CURRENT_STORAGE } from '../../src/initialize'
+import ShouldAllowAccessBlobDynamic from '../__fixtures__/dynamics/ShouldAllowAccessBlob.storage-dynamic'
+
+const port = 4000 + Number(process.env['JEST_WORKER_ID'])
+
+let app: ExpressApp
+afterEach(async (): Promise<void> => {
+  await app.stop()
+  ShouldAllowAccessBlobDynamic.allow = true
+})
+
+beforeAll(async (): Promise<void> => {
+  await initialize({ debug: true, dynamicsLocation: './tests/__fixtures__/dynamics' })
+})
+
+describe('StorageController', (): void => {
+  describe('retrieve', (): void => {
+    describe('when accessing a retrievable blob', (): void => {
+      it('returns ok and the blob', async (): Promise<void> => {
+        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
+        app.on('request/error', console.log)
+
+        await app.prepare()
+        await app.run()
+
+        const key = await CURRENT_STORAGE.instance.store({ filename: 'test.txt', data: Buffer.from('Hello') })
+        const response = await fetch(`http://localhost:${port}/storage/${key}/test.txt`)
+
+        expect(response.status).toEqual(200)
+        expect(response.headers.get('content-type')).toEqual('text/plain; charset=utf-8')
+        expect(response.body.read()).toEqual(Buffer.from('Hello'))
+      })
+    })
+
+    describe('when blob does not exists', (): void => {
+      it('returns not found', async (): Promise<void> => {
+        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
+        app.on('request/error', console.log)
+
+        await app.prepare()
+        await app.run()
+
+        const response = await fetch(`http://localhost:${port}/storage/nop/test.txt`)
+
+        expect(response.status).toEqual(404)
+      })
+    })
+
+    describe('when allow dynamic returns false', (): void => {
+      it('returns forbidden', async (): Promise<void> => {
+        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
+        app.on('request/error', console.log)
+
+        await app.prepare()
+        await app.run()
+
+        ShouldAllowAccessBlobDynamic.allow = false
+
+        const key = await CURRENT_STORAGE.instance.store({ filename: 'test.txt', data: Buffer.from('Hello') })
+        const response = await fetch(`http://localhost:${port}/storage/${key}/test.txt`)
+
+        expect(response.status).toEqual(403)
+      })
+    })
+  })
+})
