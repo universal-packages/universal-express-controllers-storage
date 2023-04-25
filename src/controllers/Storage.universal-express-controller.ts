@@ -12,11 +12,11 @@ export default class StorageController extends BaseController {
     const should = await CURRENT_STORAGE.api.performDynamic('should-allow-access-blob', { request: this.request, key })
 
     if (should) {
-      const uri = CURRENT_STORAGE.instance.retrieveUri(key)
+      const uri = await CURRENT_STORAGE.instance.retrieveUri(key)
 
       // Local storage returns undefined if file does not exists
       if (uri) {
-        if (uri.includes('http')) {
+        if (CURRENT_STORAGE.options.externalStrategy === 'redirect' && uri.includes('http')) {
           this.redirect(uri)
         } else {
           if (filename) this.response.contentType(mime.lookup(filename) || 'application/octet-stream')

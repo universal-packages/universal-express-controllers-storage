@@ -5,11 +5,12 @@ import { Request } from 'express'
 
 export type RouteName = 'retrieve'
 
-export interface ExpressControllerStorageOptions extends StorageOptions {
+export interface ExpressControllersStorageOptions extends StorageOptions {
   debug?: boolean
   dynamicsLocation: string
   rootPath?: string
   routes?: StorageRoutes
+  externalStrategy?: 'redirect' | 'proxy'
 }
 
 export type StorageRoutes = {
@@ -25,7 +26,7 @@ export interface StorageRoute {
 export interface CurrentStorage {
   api: DynamicApi<StorageDynamicNames>
   instance: Storage
-  options: ExpressControllerStorageOptions
+  options: ExpressControllersStorageOptions
 }
 
 export interface StorageDynamicNames {
