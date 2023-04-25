@@ -6,7 +6,7 @@ import { CURRENT_STORAGE } from '../initialize'
 @RegisterController()
 export default class StorageController extends BaseController {
   @RegisterAction('retrieve')
-  public async connectProvider(): Promise<any> {
+  public async retrieve(): Promise<any> {
     const { key, filename } = this.request.params
 
     const should = await CURRENT_STORAGE.api.performDynamic('should-allow-access-blob', { request: this.request, key })
