@@ -21,7 +21,7 @@ describe('initialize', (): void => {
       await app.prepare()
       await app.run()
 
-      const key = await CURRENT_STORAGE.instance.store({ filename: 'test.txt', data: Buffer.from('Hello') })
+      const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
       const response = await fetch(`http://localhost:${port}/custom/deeper/${key}`)
       expect(response.status).not.toEqual(404)

@@ -1,4 +1,4 @@
-import { Storage } from '@universal-packages/storage'
+import { Storage, VersionBlobDescriptor } from '@universal-packages/storage'
 import { CurrentStorage, ExpressControllersStorageOptions, StorageRoutes } from './types'
 import { DynamicApi } from '@universal-packages/dynamic-api'
 

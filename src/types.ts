@@ -1,6 +1,6 @@
 import { DynamicApi } from '@universal-packages/dynamic-api'
 import { HTTPVerb } from '@universal-packages/express-controllers'
-import { Storage, StorageOptions } from '@universal-packages/storage'
+import { Storage, StorageOptions, VersionBlobDescriptor } from '@universal-packages/storage'
 import { Request } from 'express'
 
 export type RouteName = 'retrieve'
@@ -37,4 +37,5 @@ export interface StorageDynamicNames {
 export interface ShouldAllowAccessBlobPayload {
   request: Request
   key: string
+  version?: VersionBlobDescriptor
 }
