@@ -1,7 +1,7 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
 import fetch from 'node-fetch'
-import { StorageRoutes, initialize } from '../../src'
-import { CURRENT_STORAGE } from '../../src/initialize'
+import { StorageRoutes, initialize } from '../../../src'
+import { CURRENT_STORAGE } from '../../../src/express-controllers-storage'
 
 const port = 4000 + Number(process.env['JEST_WORKER_ID'])
 

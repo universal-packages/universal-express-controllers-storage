@@ -1,6 +1,6 @@
 import { Action, Controller } from '@universal-packages/express-controllers'
 import { ClassDecoratorFunction, MethodDecoratorFunction } from '@universal-packages/namespaced-decorators'
-import { CURRENT_STORAGE } from './initialize'
+import { CURRENT_STORAGE } from './express-controllers-storage'
 import { RouteName } from './types'
 
 export function RegisterAction(route: RouteName): MethodDecoratorFunction {

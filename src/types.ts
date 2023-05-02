@@ -8,6 +8,7 @@ export type RouteName = 'retrieve'
 export interface ExpressControllersStorageOptions extends StorageOptions {
   debug?: boolean
   dynamicsLocation: string
+  urlHost?: string
   rootPath?: string
   routes?: StorageRoutes
   externalStrategy?: 'redirect' | 'proxy'

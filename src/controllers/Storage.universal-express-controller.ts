@@ -1,7 +1,7 @@
 import { BaseController } from '@universal-packages/express-controllers'
 import mime from 'mime-types'
 import { RegisterAction, RegisterController } from '../decorators'
-import { CURRENT_STORAGE } from '../initialize'
+import { CURRENT_STORAGE } from '../express-controllers-storage'
 import { VersionBlobDescriptor } from '@universal-packages/storage'
 
 @RegisterController()
