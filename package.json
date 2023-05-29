@@ -12,7 +12,7 @@
     "test": "jest --watch",
     "test:full": "jest --coverage --verbose",
     "test:clear": "jest --clearCache",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\""
+    "format": "prettier --write \"./{src,tests}/**/*.{ts,tsx,js,jsx,json}\""
   },
   "dependencies": {
     "@universal-packages/dynamic-api": "^1.5.1",
@@ -23,6 +23,7 @@
     "@universal-packages/express-controllers": "^1.8.1"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.0",
     "@types/mime-types": "^2.1.1",
@@ -55,6 +56,17 @@
     "semi": false,
     "singleQuote": true,
     "printWidth": 180,
-    "trailingComma": "none"
+    "trailingComma": "none",
+    "importOrder": [
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "importOrderParserPlugins": [
+      "typescript",
+      "jsx",
+      "classProperties",
+      "decorators-legacy"
+    ]
   }
 }
