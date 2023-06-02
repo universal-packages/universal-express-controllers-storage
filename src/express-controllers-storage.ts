@@ -1,6 +1,7 @@
-import { Storage, VersionBlobDescriptor } from '@universal-packages/storage'
-import { CurrentStorage, ExpressControllersStorageOptions, StorageRoutes } from './types'
 import { DynamicApi } from '@universal-packages/dynamic-api'
+import { Storage, VersionBlobDescriptor } from '@universal-packages/storage'
+
+import { CurrentStorage, ExpressControllersStorageOptions, StorageRoutes } from './types'
 
 export const CURRENT_STORAGE: CurrentStorage = { api: null, instance: null, options: null }
 

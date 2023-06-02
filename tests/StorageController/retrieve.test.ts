@@ -1,6 +1,7 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
 import fs from 'fs'
 import fetch from 'node-fetch'
+
 import { initialize } from '../../src'
 import { CURRENT_STORAGE } from '../../src/express-controllers-storage'
 import ShouldAllowAccessBlobDynamic from '../__fixtures__/dynamics/ShouldAllowAccessBlob.storage-dynamic'

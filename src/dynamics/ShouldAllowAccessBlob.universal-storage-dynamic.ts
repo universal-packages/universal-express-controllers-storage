@@ -1,5 +1,6 @@
 import { Dynamic } from '@universal-packages/dynamic-api'
-import { StorageDynamicNames, ShouldAllowAccessBlobPayload } from '../types'
+
+import { ShouldAllowAccessBlobPayload, StorageDynamicNames } from '../types'
 
 @Dynamic<StorageDynamicNames>('should-allow-access-blob', true)
 export default class ShouldAllowAccessBlobDynamic {

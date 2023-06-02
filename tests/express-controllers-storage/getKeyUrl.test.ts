@@ -1,4 +1,4 @@
-import { StorageRoutes, initialize, getKeyUrl } from '../../src'
+import { StorageRoutes, getKeyUrl, initialize } from '../../src'
 import { CURRENT_STORAGE } from '../../src/express-controllers-storage'
 
 describe('getKeyUrl', (): void => {

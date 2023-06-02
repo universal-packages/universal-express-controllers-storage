@@ -1,8 +1,9 @@
 import { BaseController } from '@universal-packages/express-controllers'
+import { VersionBlobDescriptor } from '@universal-packages/storage'
 import mime from 'mime-types'
+
 import { RegisterAction, RegisterController } from '../decorators'
 import { CURRENT_STORAGE } from '../express-controllers-storage'
-import { VersionBlobDescriptor } from '@universal-packages/storage'
 
 @RegisterController()
 export default class StorageController extends BaseController {
