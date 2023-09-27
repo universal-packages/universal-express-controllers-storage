@@ -21,7 +21,7 @@ export async function initialize(options: ExpressControllersStorageOptions, stor
       dynamicsLocation: CURRENT_STORAGE.options.dynamicsLocation
     })
 
-    if (!storage) await CURRENT_STORAGE.instance.initialize()
+    if (!storage) await CURRENT_STORAGE.instance.prepare()
     await CURRENT_STORAGE.api.loadDynamics()
 
     return CURRENT_STORAGE

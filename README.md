@@ -36,7 +36,7 @@ Now storage blobs a re being served in `storage/:key/:filename`
 
 #### Options
 
-`initialize` takes the same [options](https://github.com/universal-packages/universal-storage#options) as `Storage`.
+`initialize()` takes the same [options](https://github.com/universal-packages/universal-storage#options) as `Storage`.
 
 Additionally takes the following ones:
 

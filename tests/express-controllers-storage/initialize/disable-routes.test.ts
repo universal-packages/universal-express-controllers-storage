@@ -10,7 +10,7 @@ afterEach(async (): Promise<void> => {
   await app.stop()
 })
 
-describe('initialize', (): void => {
+describe('prepare', (): void => {
   describe('disable-routes', (): void => {
     it('disable routes if configured', async (): Promise<void> => {
       const routes: StorageRoutes = { retrieve: { enable: false } }
