@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@universal-packages/dynamic-api": "^1.5.1",
-    "@universal-packages/storage": "^1.8.0",
+    "@universal-packages/storage": "^1.8.5",
     "mime-types": "^2.1.35"
   },
   "peerDependencies": {
