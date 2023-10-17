@@ -24,7 +24,7 @@
     "@universal-packages/express-controllers": "^1.10.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^1.4.4",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/jest": "^29.5.5",
     "@types/mime-types": "^2.1.2",
     "@types/node": "^18.11.9",
@@ -47,6 +47,9 @@
     "singleQuote": true,
     "printWidth": 180,
     "trailingComma": "none",
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports"
+    ],
     "importOrder": [
       "^[./]"
     ],
