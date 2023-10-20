@@ -1,5 +1,4 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
-import fetch from 'node-fetch'
 
 import { StorageRoutes, initialize } from '../../../src'
 
@@ -21,8 +20,8 @@ describe(initialize, (): void => {
       await app.prepare()
       await app.run()
 
-      let response = await fetch(`http://localhost:${port}/storage/mykey/test.txt`, { method: 'patch' })
-      expect(response.status).toEqual(404)
+      await fPatch('storage/mykey/test.txt')
+      expect(fResponse).toHaveReturnedWithStatus('NOT_FOUND')
     })
   })
 })

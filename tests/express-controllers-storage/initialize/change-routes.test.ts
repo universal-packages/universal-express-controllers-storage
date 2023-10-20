@@ -1,5 +1,4 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
-import fetch from 'node-fetch'
 
 import { StorageRoutes, initialize } from '../../../src'
 import { CURRENT_STORAGE } from '../../../src/express-controllers-storage'
@@ -24,8 +23,8 @@ describe(initialize, (): void => {
 
       const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
-      const response = await fetch(`http://localhost:${port}/custom/deeper/${key}`)
-      expect(response.status).not.toEqual(404)
+      await fGet(`custom/deeper/${key}`)
+      expect(fResponse).not.toHaveReturnedWithStatus('NOT_FOUND')
     })
   })
 })

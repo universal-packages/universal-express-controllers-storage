@@ -1,6 +1,5 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
 import fs from 'fs'
-import fetch from 'node-fetch'
 
 import { initialize } from '../../src'
 import { CURRENT_STORAGE } from '../../src/express-controllers-storage'
@@ -29,11 +28,12 @@ describe('StorageController', (): void => {
         await app.run()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.txt`)
 
-        expect(response.status).toEqual(200)
-        expect(response.headers.get('content-type')).toEqual('text/plain; charset=utf-8')
-        expect(response.body.read()).toEqual(Buffer.from('Hello'))
+        await fGet(`storage/${key}/test.txt`)
+
+        expect(fResponse).toHaveReturnedWithStatus('OK')
+        expect(fResponse.headers.get('content-type')).toEqual('text/plain; charset=utf-8')
+        expect(fResponseBody).toEqual('Hello')
       })
     })
 
@@ -45,9 +45,8 @@ describe('StorageController', (): void => {
         await app.prepare()
         await app.run()
 
-        const response = await fetch(`http://localhost:${port}/storage/nop/test.txt`)
-
-        expect(response.status).toEqual(404)
+        await fGet('storage/nop/test.txt')
+        expect(fResponse).toHaveReturnedWithStatus('NOT_FOUND')
       })
     })
 
@@ -62,9 +61,9 @@ describe('StorageController', (): void => {
         ShouldAllowAccessBlobDynamic.allow = false
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.txt`)
 
-        expect(response.status).toEqual(403)
+        await fGet(`storage/${key}/test.txt`)
+        expect(fResponse).toHaveReturnedWithStatus('FORBIDDEN')
       })
     })
 
@@ -82,11 +81,11 @@ describe('StorageController', (): void => {
         await CURRENT_STORAGE.instance.storeVersion(key, { name: 'test.png', width: 64 })
         const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 64 })
 
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.png?version=${versionSlug}`)
+        await fGet(`storage/${key}/test.png?version=${versionSlug}`)
 
-        expect(response.status).toEqual(200)
-        expect(response.headers.get('content-type')).toEqual('image/png')
-        expect(response.body.read()).toEqual(await CURRENT_STORAGE.instance.retrieveVersion(key, { width: 64 }))
+        expect(fResponse).toHaveReturnedWithStatus('OK')
+        expect(fResponse.headers.get('content-type')).toEqual('image/png')
+        expect(fResponseBody).toEqual(await CURRENT_STORAGE.instance.retrieveVersion(key, { width: 64 }))
       })
     })
 
@@ -104,9 +103,9 @@ describe('StorageController', (): void => {
         await CURRENT_STORAGE.instance.storeVersion(key, { name: 'test.png', width: 64 })
         const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 32 })
 
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.png?version=${versionSlug}`)
+        await fGet(`storage/${key}/test.png?version=${versionSlug}`)
 
-        expect(response.status).toEqual(404)
+        expect(fResponse).toHaveReturnedWithStatus('NOT_FOUND')
       })
     })
 
@@ -121,9 +120,8 @@ describe('StorageController', (): void => {
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
         const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 32 })
 
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.txt?version=${versionSlug}`)
-
-        expect(response.status).toEqual(400)
+        await fGet(`storage/${key}/test.txt?version=${versionSlug}`)
+        expect(fResponse).toHaveReturnedWithStatus('BAD_REQUEST')
       })
     })
 
@@ -140,9 +138,8 @@ describe('StorageController', (): void => {
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.png', data: image })
         await CURRENT_STORAGE.instance.storeVersion(key, { name: 'test.png', width: 64 })
 
-        const response = await fetch(`http://localhost:${port}/storage/${key}/test.png?version=8*8`)
-
-        expect(response.status).toEqual(400)
+        await fGet(`storage/${key}/test.png?version=8*8`)
+        expect(fResponse).toHaveReturnedWithStatus('BAD_REQUEST')
       })
     })
   })
