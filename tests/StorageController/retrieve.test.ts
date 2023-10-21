@@ -1,17 +1,8 @@
-import { ExpressApp } from '@universal-packages/express-controllers'
 import fs from 'fs'
 
 import { initialize } from '../../src'
 import { CURRENT_STORAGE } from '../../src/express-controllers-storage'
 import ShouldAllowAccessBlobDynamic from '../__fixtures__/dynamics/ShouldAllowAccessBlob.storage-dynamic'
-
-const port = 4000 + Number(process.env['JEST_WORKER_ID'])
-
-let app: ExpressApp
-afterEach(async (): Promise<void> => {
-  await app.stop()
-  ShouldAllowAccessBlobDynamic.allow = true
-})
 
 beforeAll(async (): Promise<void> => {
   await initialize({ debug: true, dynamicsLocation: './tests/__fixtures__/dynamics' })
@@ -21,11 +12,7 @@ describe('StorageController', (): void => {
   describe('retrieve', (): void => {
     describe('when accessing a retrievable blob', (): void => {
       it('returns ok and the blob', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
@@ -39,11 +26,7 @@ describe('StorageController', (): void => {
 
     describe('when blob does not exists', (): void => {
       it('returns not found', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         await fGet('storage/nop/test.txt')
         expect(fResponse).toHaveReturnedWithStatus('NOT_FOUND')
@@ -51,14 +34,16 @@ describe('StorageController', (): void => {
     })
 
     describe('when should allow dynamic returns false', (): void => {
-      it('returns forbidden', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
-
+      beforeEach((): void => {
         ShouldAllowAccessBlobDynamic.allow = false
+      })
+
+      afterEach((): void => {
+        ShouldAllowAccessBlobDynamic.allow = true
+      })
+
+      it('returns forbidden', async (): Promise<void> => {
+        await runExpressApp()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
@@ -69,11 +54,7 @@ describe('StorageController', (): void => {
 
     describe('when accessing a retrievable version blob', (): void => {
       it('returns ok and the blob', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
@@ -91,11 +72,7 @@ describe('StorageController', (): void => {
 
     describe('when version blob does not exists', (): void => {
       it('returns not found', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
@@ -111,11 +88,7 @@ describe('StorageController', (): void => {
 
     describe('when version is request from a non image', (): void => {
       it('returns bad request', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
         const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 32 })
@@ -127,11 +100,7 @@ describe('StorageController', (): void => {
 
     describe('when version slug is malformed', (): void => {
       it('returns bad request', async (): Promise<void> => {
-        app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
-        app.on('request/error', console.log)
-
-        await app.prepare()
-        await app.run()
+        await runExpressApp()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
