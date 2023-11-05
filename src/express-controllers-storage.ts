@@ -54,7 +54,7 @@ export async function getVersionKeyUrl(key: string, filename: string, descriptor
   const host = CURRENT_STORAGE.options.urlHost
   const rootPath = CURRENT_STORAGE.options.rootPath
   const path = CURRENT_STORAGE.options.routes.retrieve.path.replace(':key', key).replace(':filename', filename)
-  const version = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor(descriptor)
+  const version = Storage.serializeVersionBlobDescriptor(descriptor)
 
   return `${host}/${rootPath}/${path}?version=${version}`.replace(/([^:]\/)\/+/g, '$1')
 }

@@ -1,3 +1,4 @@
+import { Storage } from '@universal-packages/storage'
 import fs from 'fs'
 
 import { initialize } from '../../src'
@@ -60,7 +61,7 @@ describe('StorageController', (): void => {
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.png', data: image })
         await CURRENT_STORAGE.instance.storeVersion(key, { name: 'test.png', width: 64 })
-        const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 64 })
+        const versionSlug = Storage.serializeVersionBlobDescriptor({ width: 64 })
 
         await fGet(`storage/${key}/test.png?version=${versionSlug}`)
 
@@ -78,7 +79,7 @@ describe('StorageController', (): void => {
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.png', data: image })
         await CURRENT_STORAGE.instance.storeVersion(key, { name: 'test.png', width: 64 })
-        const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 32 })
+        const versionSlug = Storage.serializeVersionBlobDescriptor({ width: 32 })
 
         await fGet(`storage/${key}/test.png?version=${versionSlug}`)
 
@@ -91,7 +92,7 @@ describe('StorageController', (): void => {
         await runExpressApp()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
-        const versionSlug = CURRENT_STORAGE.instance.serializeVersionBlobDescriptor({ width: 32 })
+        const versionSlug = Storage.serializeVersionBlobDescriptor({ width: 32 })
 
         await fGet(`storage/${key}/test.txt?version=${versionSlug}`)
         expect(fResponse).toHaveReturnedWithStatus('BAD_REQUEST')

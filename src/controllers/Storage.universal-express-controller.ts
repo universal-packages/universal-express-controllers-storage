@@ -1,5 +1,5 @@
 import { BaseController } from '@universal-packages/express-controllers'
-import { VersionBlobDescriptor } from '@universal-packages/storage'
+import { Storage, VersionBlobDescriptor } from '@universal-packages/storage'
 import mime from 'mime-types'
 
 import { RegisterAction, RegisterController } from '../decorators'
@@ -20,7 +20,7 @@ export default class StorageController extends BaseController {
 
       if (version) {
         try {
-          versionBlobDescriptor = CURRENT_STORAGE.instance.parseVersionSlug(version as string)
+          versionBlobDescriptor = Storage.parseVersionSlug(version as string)
         } catch {
           return this.status('BAD_REQUEST').json({ message: 'Version query parameter must be a valid version slug' })
         }
