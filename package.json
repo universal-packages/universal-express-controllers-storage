@@ -1,6 +1,6 @@
 {
   "name": "@universal-packages/express-controllers-storage",
-  "version": "1.3.29",
+  "version": "1.3.30",
   "description": "universal-storage implementation on top of universal-express-controllers.",
   "author": "David De Anda <david@universal-packages.com> (https://github.com/universal-packages)",
   "license": "MIT",
