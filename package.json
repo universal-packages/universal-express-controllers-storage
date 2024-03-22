@@ -16,7 +16,7 @@
     "update-universal-dependencies": "umaintenance update-universal-dependencies"
   },
   "dependencies": {
-    "@universal-packages/dynamic-api": "^1.7.5",
+    "@universal-packages/dynamic-api": "^1.7.6",
     "@universal-packages/storage": "^1.11.2",
     "mime-types": "^2.1.35"
   },
