@@ -18,16 +18,16 @@ npm install @universal-packages/express-controllers
 
 #### **`initialize(options: Object, [authenticatableClass: AuthenticatableClass])`**
 
-Initialize the storage api and the storage controller to prepare routing configuration before the `ExpressApp` runs. The storage controller is loaded automatically by `ExpressApp`.
+Initialize the storage api and the storage controller to prepare routing configuration before the `ExpressControllers` runs. The storage controller is loaded automatically by `ExpressControllers`.
 
 ```js
 import { initialize } from '@universal-packages/express-controllers-storage'
-import { ExpressApp } from '@universal-packages/express-controllers'
+import { ExpressControllers } from '@universal-packages/express-controllers'
 import User from './User'
 
 await initialize({ dynamicsLocation: './src' }, User)
 
-const app = new ExpressApp({ port: 3000 })
+const app = new ExpressControllers({ port: 3000 })
 await app.prepare()
 await app.run()
 ```

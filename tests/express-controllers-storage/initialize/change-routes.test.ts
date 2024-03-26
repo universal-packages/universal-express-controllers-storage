@@ -1,11 +1,11 @@
-import { ExpressApp } from '@universal-packages/express-controllers'
+import { ExpressControllers } from '@universal-packages/express-controllers'
 
 import { StorageRoutes, initialize } from '../../../src'
 import { CURRENT_STORAGE } from '../../../src/express-controllers-storage'
 
 const port = 4000 + Number(process.env['JEST_WORKER_ID'])
 
-let app: ExpressApp
+let app: ExpressControllers
 afterEach(async (): Promise<void> => {
   await app.stop()
 })
@@ -19,7 +19,7 @@ describe(initialize, (): void => {
         await initialize({ debug: true, dynamicsLocation: './tests/__fixtures__/dynamics', routes, rootPath: '/custom' })
       } catch {}
 
-      app = new ExpressApp({ appLocation: './tests/__fixtures__/controllers', port })
+      app = new ExpressControllers({ appLocation: './tests/__fixtures__/controllers', port })
       app.on('request/error', console.log)
       await app.prepare()
       await app.run()

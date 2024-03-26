@@ -13,7 +13,7 @@ describe('StorageController', (): void => {
   describe('retrieve', (): void => {
     describe('when accessing a retrievable blob', (): void => {
       it('returns ok and the blob', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
@@ -27,7 +27,7 @@ describe('StorageController', (): void => {
 
     describe('when blob does not exists', (): void => {
       it('returns not found', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         await fGet('storage/nop/test.txt')
         expect(fResponse).toHaveReturnedWithStatus('NOT_FOUND')
@@ -44,7 +44,7 @@ describe('StorageController', (): void => {
       })
 
       it('returns forbidden', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
 
@@ -55,7 +55,7 @@ describe('StorageController', (): void => {
 
     describe('when accessing a retrievable version blob', (): void => {
       it('returns ok and the blob', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
@@ -73,7 +73,7 @@ describe('StorageController', (): void => {
 
     describe('when version blob does not exists', (): void => {
       it('returns not found', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
@@ -89,7 +89,7 @@ describe('StorageController', (): void => {
 
     describe('when version is request from a non image', (): void => {
       it('returns bad request', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const key = await CURRENT_STORAGE.instance.store({ name: 'test.txt', data: Buffer.from('Hello') })
         const versionSlug = Storage.serializeVersionBlobDescriptor({ width: 32 })
@@ -101,7 +101,7 @@ describe('StorageController', (): void => {
 
     describe('when version slug is malformed', (): void => {
       it('returns bad request', async (): Promise<void> => {
-        await runExpressApp()
+        await runExpressControllers()
 
         const image = fs.readFileSync('./tests/__fixtures__/images/test.128.png')
 
