@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@universal-packages/dynamic-api": "^1.12.4",
-    "@universal-packages/storage": "^1.11.9",
+    "@universal-packages/storage": "^1.11.10",
     "mime-types": "^2.1.35"
   },
   "peerDependencies": {
-    "@universal-packages/express-controllers": "^1.12.6"
+    "@universal-packages/express-controllers": "^1.12.7"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
