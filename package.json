@@ -16,12 +16,12 @@
     "update-universal-dependencies": "umaintenance update-universal-dependencies"
   },
   "dependencies": {
-    "@universal-packages/dynamic-api": "^1.13.1",
+    "@universal-packages/dynamic-api": "^1.13.2",
     "@universal-packages/storage": "^1.12.1",
     "mime-types": "^2.1.35"
   },
   "peerDependencies": {
-    "@universal-packages/express-controllers": "^1.14.1"
+    "@universal-packages/express-controllers": "^1.14.2"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
